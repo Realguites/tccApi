@@ -14,14 +14,15 @@ classRouter.post('/',async(req, res)=>{
   try {
     const email = req.body.email;
     const repo = getRepository(User);
-    const usuario = await repo.findOne({ email });
-    if(usuario == null){
+    const user = await repo.findOne({ email });
+    if(user == null){
       return res.status(400).json("Login ou senha incorretos!!!");
     }
-   if (bcrypt.compareSync(req.body.password, usuario.password)) {
+
+   if (bcrypt.compareSync(req.body.password, user.password)) {
         const token = jwt.sign(
         {
-          usuario
+          user
         }, process.env.JWT_KEY,
         {
           expiresIn: "1h"
