@@ -16,7 +16,7 @@ classRouter.post('/',async(req, res)=>{
     const repo = getRepository(User);
     const user = await repo.findOne({ email });
     if(user == null){
-      return res.status(400).json("Login ou senha incorretos!!!");
+      return res.status(400).json({ erro: "Login ou senha incorretos!!!"});
     }
 
    if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -27,7 +27,7 @@ classRouter.post('/',async(req, res)=>{
         {
           expiresIn: "1h"
         })
-        res.status(200).json({ msg: "Ok!!!" , token})
+        res.status(200).json({user, msg: "Ok!!!" , token})
     } else {
         res.status(400).json({ erro: "Login ou senha incorretos!!!" })
     }
