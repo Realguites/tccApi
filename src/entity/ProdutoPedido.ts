@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryColumn } from "typeorm"
 
 @Entity()
-export default class Smartphone {
+export default class ProdutoPedido {
 
     @PrimaryColumn()
     regAte : Number
