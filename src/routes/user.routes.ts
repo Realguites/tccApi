@@ -4,13 +4,10 @@ import User from "../entity/User";
 
 const login = require("../middleware/login");
 const classRouter = Router();
-const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
 
-classRouter.post('/' ,async(req, res)=>{
+classRouter.post('/',login, async(req, res)=>{
   try{
-    const hash = bcrypt.hashSync(req.body.password, 15);
-    req.body.password = hash;
+    console.log(req)
     const repo = getRepository(User);
     const email = req.body.email;
 
@@ -18,6 +15,7 @@ classRouter.post('/' ,async(req, res)=>{
     if(usuario.length){
       return res.status(409).json("Usuário já cadastrado!");
     }else{
+      req.body.registrationDate = new Date()
       const resposta = await repo.save(req.body);
       return res.status(201).json(resposta);
     }
@@ -26,9 +24,9 @@ classRouter.post('/' ,async(req, res)=>{
     return res.status(400).json("Erro ao executar " + err);
   }
 })
+
 classRouter.get('/', login, async(req, res)=>{
   try{  
-
     const repo = getRepository(User);
     const resposta = await repo.find();
     return res.status(200).json(resposta);

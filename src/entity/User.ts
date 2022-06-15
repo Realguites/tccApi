@@ -21,10 +21,10 @@ export default class User{
     @Column()
     status: string
 
-    @Column()
+    @Column({ nullable: true })
     registrationDate: Date
 
-    @Column()
+    @Column({ nullable: true })
     updatedDate: Date
 
 }
