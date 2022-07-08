@@ -27,4 +27,8 @@ export default class User{
     @Column({ nullable: true })
     updatedDate: Date
 
+    @Column({ nullable: true })
+    cnpj: string
+
+
 }

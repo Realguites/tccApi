@@ -1,10 +1,13 @@
 import { Entity, Column, PrimaryColumn } from "typeorm"
 
 @Entity()
-export default class Quantidade {
+export default class Produto {
 
     @PrimaryColumn()
     codPro : Number
+
+    @PrimaryColumn()
+    cnpj : String
 
     @Column()
     codBar : String
@@ -24,12 +27,12 @@ export default class Quantidade {
     @Column()
     codSub : String
 
-    @Column()
+    @Column({ nullable: true })
     selDin : String
 
-    @Column()
+    @Column({ nullable: true })
     obsPro : String
 
-    @Column()
+    @Column({ nullable: true })
     datEdi : Date
 }
