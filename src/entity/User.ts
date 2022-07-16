@@ -6,25 +6,29 @@ export default class User{
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({ nullable: true })
     name: string
 
-    @Column()
+    @Column({ nullable: true })
     email: string
 
-    @Column()
+    @Column({ nullable: true })
     password: string
 
-    @Column()
+    @Column({ nullable: true })
     level: string
 
-    @Column()
+    @Column({ nullable: true })
     status: string
 
-    @Column()
+    @Column({ nullable: true })
     registrationDate: Date
 
-    @Column()
+    @Column({ nullable: true })
     updatedDate: Date
+
+    @Column({ nullable: true })
+    cnpj: string
+
 
 }

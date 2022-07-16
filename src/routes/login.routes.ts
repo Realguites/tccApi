@@ -25,7 +25,7 @@ classRouter.post('/',async(req, res)=>{
           user
         }, process.env.JWT_KEY,
         {
-          expiresIn: "1h"
+          expiresIn: "3h"
         })
         res.status(200).json({user, msg: "Ok!!!" , token})
     } else {

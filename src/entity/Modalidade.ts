@@ -1,11 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn} from "typeorm"
+import { Entity, Column,  PrimaryColumn} from "typeorm"
 
 @Entity()
 export default class Modalidade {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     codMod : Number
 
+    @PrimaryColumn()
+    cnpj : String
+    
     @Column()
     ideMod : String
 
@@ -13,15 +16,16 @@ export default class Modalidade {
     nivMod : String
 
     @Column()
-    desCad : String// char para cada produto se possui desconto ou não na hora do cadastro;
+    desCad : String // char para cada produto se possui desconto ou não na hora do cadastro;
 
     @Column()
-    desIte : String// char para cada item ____________||____________________||________;
+    desIte : String 
 
     @Column()
     limDes : Number
 
     @Column()
     modApr : String
+
 
 }
