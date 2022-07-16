@@ -4,9 +4,6 @@ import { Entity, Column, PrimaryColumn } from "typeorm"
 export default class ProdutoPedido {
 
     @PrimaryColumn()
-    regAte : Number
-
-    @Column()
 	codPro : Number // código do produto
 
     @Column()
@@ -15,7 +12,6 @@ export default class ProdutoPedido {
     @Column()
 	qtdIte : Number // quantidade de itens
 
-    @Column()
 	vlrUni : Number // valor unitario do produto
 
     @Column()

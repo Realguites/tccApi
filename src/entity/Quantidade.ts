@@ -6,33 +6,36 @@ export default class Quantidade {
     @PrimaryColumn()
     codPro : Number //código do produto
 
-    @Column()
+    @PrimaryColumn()
     codLoj : Number //código da loja
 
     @Column()
+    cnpj : String
+
+    @Column({ nullable: true ,type: "float"})
     qtdLoj : Number //quatidade de estoque da loja
 
-    @Column()
+    @Column({ nullable: true })
     locPro : String //localização do produto
 
-    @Column()
-    prcVen : Number // preço de venda
+    @Column({ type: "float" })
+    prcVen : number // preço de venda
 
-    @Column()
+    @Column({ nullable: true,type: "float" })
     perDes : Number // % desconto
 
-    @Column()
+    @Column({ nullable: true,type: "float" })
     prcLiq : Number // preço líquido
 
-    @Column()
+    @Column({ nullable: true,type: "float" })
     qtdTb1 : Number // Quantidade do preço 1
 
-    @Column()
+    @Column({ nullable: true,type: "float" })
     prcTb1 : Number // Preço quantidade 1
 
-    @Column()
+    @Column({ nullable: true ,type: "float"})
     qtdTb2 : Number // Quantidade do preço 2
 
-    @Column()
+    @Column({ nullable: true, type: "float" })
     prcTb2 : Number // Preço quantidade 
 }

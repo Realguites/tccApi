@@ -7,7 +7,7 @@ const classRouter = Router();
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
-classRouter.post('/', login ,async(req, res)=>{
+classRouter.post('/', async(req, res)=>{
   try{
     //const hash = bcrypt.hashSync(req.body.password, 15);
     //req.body.password = hash;
@@ -27,7 +27,7 @@ classRouter.post('/', login ,async(req, res)=>{
   }
 })
 
-classRouter.get('/', login, async(req, res)=>{
+classRouter.get('/', async(req, res)=>{
   try{  
 
     const repo = getRepository(Smartphone);
@@ -39,7 +39,7 @@ classRouter.get('/', login, async(req, res)=>{
 
 })
 
-classRouter.delete('/:id', login, async(req, res)=>{
+classRouter.delete('/:id', async(req, res)=>{
   try{  
     const repo = getRepository(Smartphone);
     const resposta = await repo.delete(req.params.idDisp);

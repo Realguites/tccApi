@@ -19,7 +19,7 @@ export default class Modalidade {
     desCad : String // char para cada produto se possui desconto ou não na hora do cadastro;
 
     @Column()
-    desIte : String // char para cada item ____________||____________________||________;
+    desIte : String 
 
     @Column()
     limDes : Number

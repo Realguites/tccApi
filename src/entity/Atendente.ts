@@ -7,7 +7,7 @@ export default class Atendente extends User{
     @Column()
     codAte: number
 
-    @Column()
+    @Column({ nullable: true })
     senAte: string
 
     @Column()
@@ -15,4 +15,7 @@ export default class Atendente extends User{
 
     @Column()
     nomAte: string
+
+    @Column()
+    cnpj: string
 }

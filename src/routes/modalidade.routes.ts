@@ -7,7 +7,7 @@ const classRouter = Router();
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
-classRouter.post('/', login ,async(req, res)=>{
+classRouter.post('/',async(req, res)=>{
   try{
     const repo = getRepository(Modalidade);
     const resposta = await repo.save(req.body);
@@ -18,7 +18,7 @@ classRouter.post('/', login ,async(req, res)=>{
   }
 })
 
-classRouter.get('/:cnpj', login, async(req, res)=>{
+classRouter.get('/:cnpj', async(req, res)=>{
   try{  
 
     const repo = getRepository(Modalidade);
@@ -33,7 +33,7 @@ classRouter.get('/:cnpj', login, async(req, res)=>{
 })
 
 
-classRouter.delete('/:cnpj', login, async(req, res)=>{
+classRouter.delete('/:cnpj', async(req, res)=>{
   try{  
     const repo = getRepository(Modalidade);
     const resposta = await repo.delete(req.params.cnpj);

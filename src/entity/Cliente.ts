@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm"
 
 @Entity()
 export default class Cliente {
-    @PrimaryGeneratedColumn()
-	codCli : String
+    @PrimaryColumn()
+	codCli : Number
 
     @Column()
 	nomCli : String
@@ -38,7 +38,7 @@ export default class Cliente {
     @Column({ nullable: true })
 	claCli : String
 
-    @Column({ nullable: true })
+    @Column({ nullable: true , type: "float"})
 	desVen : Number
 
     @Column({ nullable: true })
@@ -47,9 +47,9 @@ export default class Cliente {
     @Column({ nullable: true })
 	cnpj : String
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: "float"})
 	vlrVen : Number // valor vencido
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: "float" })
 	vlrPen : Number // valor pendente
 }

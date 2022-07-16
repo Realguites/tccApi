@@ -1,17 +1,17 @@
 import { Router } from "express";
 import { Connection, getConnection, getRepository } from 'typeorm';
-import Produto from "../entity/Produto";
+import Pedido from "../entity/Pedido";
 
 const login = require("../middleware/login");
 const classRouter = Router();
 const bcrypt = require("bcrypt");
 
-classRouter.post('/', async(req, res)=>{
+classRouter.post('/' ,async(req, res)=>{
   try{
-    const repo = getRepository(Produto);
+    const repo = getRepository(Pedido);
     //const resposta = await repo.save(req.body);
     const resposta = await getConnection()
-    .createQueryBuilder().insert().into(Produto).values(req.body).execute();
+    .createQueryBuilder().insert().into(Pedido).values(req.body).execute();
     return res.status(201).json(resposta);
 
   }catch(err){
@@ -21,8 +21,7 @@ classRouter.post('/', async(req, res)=>{
 
 classRouter.get('/:cnpj', async(req, res)=>{
   try{  
-    console.log('RQUISICAO: ', req)
-    const repo = getRepository(Produto);
+    const repo = getRepository(Pedido);
     const resposta = await repo.createQueryBuilder()
     .where("cnpj = :cnpj", { cnpj:req.params.cnpj })
     .getMany();
@@ -36,7 +35,7 @@ classRouter.get('/:cnpj', async(req, res)=>{
 classRouter.get('/', async(req, res)=>{
   try{  
 
-    const repo = getRepository(Produto);
+    const repo = getRepository(Pedido);
     const resposta = await repo.find();
     return res.status(200).json(resposta);
   }catch(err){
@@ -48,9 +47,9 @@ classRouter.get('/', async(req, res)=>{
 
 classRouter.delete('/:cnpj', async(req, res)=>{
   try{  
-    const repo = getRepository(Produto);
+    const repo = getRepository(Pedido);
     const resposta = await repo.delete(req.params.cnpj);
-    await repo.createQueryBuilder().delete().from(Produto)
+    await repo.createQueryBuilder().delete().from(Pedido)
     .where("cnpj = :cnpj", { cnpj:req.params.cnpj }).execute()
     
     return res.status(204).json('OK');
