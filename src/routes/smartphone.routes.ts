@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import Smartphone from "../entity/Smartphone";
 
 const login = require("../middleware/login");
@@ -7,44 +7,77 @@ const classRouter = Router();
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
-classRouter.post('/', async(req, res)=>{
-  try{
+classRouter.post('/', async (req, res) => {
+  try {
     //const hash = bcrypt.hashSync(req.body.password, 15);
     //req.body.password = hash;
     const repo = getRepository(Smartphone);
     //const email = req.body.email;
     const idDisp = req.body.idDisp;
     const smartphone = await repo.find({ idDisp });
-    if(smartphone.length){
+    if (smartphone.length) {
       return res.status(409).json("Smartphone já cadastrado!");
-    }else{
+    } else {
       const resposta = await repo.save(req.body);
       return res.status(201).json(resposta);
     }
 
-  }catch(err){
+  } catch (err) {
     return res.status(400).json("Erro ao executar " + err);
   }
 })
 
-classRouter.get('/', async(req, res)=>{
-  try{  
+classRouter.get('/', async (req, res) => {
+  try {
 
     const repo = getRepository(Smartphone);
     const resposta = await repo.find();
     return res.status(200).json(resposta);
-  }catch(err){
+  } catch (err) {
     return res.status(400).json("Erro ao executar " + err);
   }
 
 })
 
-classRouter.delete('/:id', async(req, res)=>{
-  try{  
+classRouter.delete('/:id', async (req, res) => {
+  try {
     const repo = getRepository(Smartphone);
     const resposta = await repo.delete(req.params.idDisp);
     return res.status(200).json("Smartphone " + req.params.idDisp + " excluído com sucesso!");
-  }catch(err){
+  } catch (err) {
+    return res.status(400).json("Erro ao executar " + err);
+  }
+
+})
+
+classRouter.put('/:idDisp', async (req, res) => {
+  try {
+    const repo = getRepository(Smartphone);
+    if (req.body.status) {
+      await getConnection()
+        .createQueryBuilder()
+        .update(Smartphone)
+        .set({
+          status: req.body.status
+        })
+        .where("idDisp = :idDisp", { idDisp: req.params.idDisp })
+        .execute();
+    } else {
+      if (req.body.autCgm) {
+        await getConnection()
+          .createQueryBuilder()
+          .update(Smartphone)
+          .set({
+            autCgm: req.body.autCgm
+          })
+          .where("idDisp = :idDisp", { idDisp: req.params.idDisp })
+          .execute();
+      }
+    }
+    return res.status(204).json();
+
+
+  } catch (err) {
     return res.status(400).json("Erro ao executar " + err);
   }
 
