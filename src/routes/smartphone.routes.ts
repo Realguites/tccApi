@@ -58,6 +58,39 @@ classRouter.delete('/:idDisp', async (req, res) => {
 
 })
 
+classRouter.put('/:idDisp', async (req, res) => {
+  try {
+    const repo = getRepository(Smartphone);
+    if (req.body.status) {
+      await getConnection()
+        .createQueryBuilder()
+        .update(Smartphone)
+        .set({
+          status: req.body.status
+        })
+        .where("idDisp = :idDisp", { idDisp: req.params.idDisp })
+        .execute();
+    } else {
+      if (req.body.autCgm) {
+        await getConnection()
+          .createQueryBuilder()
+          .update(Smartphone)
+          .set({
+            autCgm: req.body.autCgm
+          })
+          .where("idDisp = :idDisp", { idDisp: req.params.idDisp })
+          .execute();
+      }
+    }
+    return res.status(204).json();
+
+
+  } catch (err) {
+    return res.status(400).json("Erro ao executar " + err);
+  }
+
+})
+
 
 classRouter.get('/:cnpj/:idDisp', async (req, res) => {
   try {
