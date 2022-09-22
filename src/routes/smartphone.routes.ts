@@ -7,17 +7,25 @@ const classRouter = Router();
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
+
 classRouter.post('/', async (req, res) => {
   try {
-    //const hash = bcrypt.hashSync(req.body.password, 15);
-    //req.body.password = hash;
     const repo = getRepository(Smartphone);
-    //const email = req.body.email;
     const idDisp = req.body.idDisp;
     const smartphone = await repo.find({ idDisp });
     if (smartphone.length) {
       return res.status(409).json("Smartphone já cadastrado!");
     } else {
+      const queryCompanyName = await repo.findOne({
+        cnpj: req.body.cnpj,
+      })
+      let companyName = 'Empresa não cadastrada no ERP'
+      if(typeof req.body.nomLoj === "undefined")
+        companyName =  queryCompanyName?.nomLoj
+      
+      if(!req.body?.nomLoj)
+        req.body.nomLoj = companyName
+      
       const resposta = await repo.save(req.body);
       return res.status(201).json(resposta);
     }
@@ -39,7 +47,7 @@ classRouter.get('/', async (req, res) => {
 
 })
 
-classRouter.delete('/:id', async (req, res) => {
+classRouter.delete('/:idDisp', async (req, res) => {
   try {
     const repo = getRepository(Smartphone);
     const resposta = await repo.delete(req.params.idDisp);
@@ -82,6 +90,54 @@ classRouter.put('/:idDisp', async (req, res) => {
   }
 
 })
+
+
+classRouter.get('/:cnpj/:idDisp', async (req, res) => {
+  try {
+    const repo = getRepository(Smartphone);
+    const data = await repo.findOne({
+      idDisp: req.params.idDisp,
+      cnpj: req.params.cnpj,
+    })
+    return res.status(200).json(data);
+
+  } catch (err) {
+    return res.status(400).json("Erro ao executar " + err);
+  }
+})
+
+classRouter.put('/:idDisp', async (req, res) => {
+  try {
+    const repo = getRepository(Smartphone);
+    if (req.body.status) {
+      await getConnection()
+        .createQueryBuilder()
+        .update(Smartphone)
+        .set({
+          status: req.body.status
+        })
+        .where("idDisp = :idDisp", { idDisp: req.params.idDisp })
+        .execute();
+    } else {
+      if (req.body.autCgm) {
+        await getConnection()
+          .createQueryBuilder()
+          .update(Smartphone)
+          .set({
+            autCgm: req.body.autCgm
+          })
+          .where("idDisp = :idDisp", { idDisp: req.params.idDisp })
+          .execute();
+      }
+    }
+    return res.status(204).json();
+
+
+  } catch (err) {
+    return res.status(400).json("Erro ao executar " + err);
+  }
+})
+
 
 
 
