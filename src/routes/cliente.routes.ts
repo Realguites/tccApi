@@ -48,6 +48,30 @@ classRouter.delete('/:cnpj', async(req, res)=>{
 
 })
 
+classRouter.get('/:cnpj/:codCli', async(req, res)=>{
+  try{  
+    const repo = getRepository(Cliente);
+    const resposta = await repo.createQueryBuilder()
+    .where("cnpj = :cnpj and codCli = :codCli", { cnpj:req.params.cnpj, codCli:req.params.codCli })
+    .getMany();
+    return res.status(200).json(resposta);
+  }catch(err){
+    return res.status(400).json("Erro ao executar " + err);
+  }
 
+})
+
+classRouter.get('/:cnpj/:nomCli', async(req, res)=>{
+  try{  
+    const repo = getRepository(Cliente);
+    const resposta = await repo.createQueryBuilder()
+    .where("cnpj = :cnpj and nomCli = :nomCli", { cnpj:req.params.cnpj, nomCli:req.params.nomCli })
+    .getMany();
+    return res.status(200).json(resposta);
+  }catch(err){
+    return res.status(400).json("Erro ao executar " + err);
+  }
+
+})
 
 export default classRouter;
