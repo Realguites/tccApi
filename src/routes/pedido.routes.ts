@@ -19,6 +19,21 @@ classRouter.post('/' ,async(req, res)=>{
   }
 })
 
+classRouter.post('/:cnpj' ,async(req, res)=>{
+  try{
+    const repo = getRepository(Pedido);
+    if(typeof req.body?.cnpj === "undefined")
+      req.body.cnpj = req?.params?.cnpj
+    console.log('TESTEEEEEEEEEEEEEEEEEEeee ', req.body)
+    const resposta = await getConnection()
+    .createQueryBuilder().insert().into(Pedido).values(req.body).execute();
+    return res.status(201).json(resposta);
+
+  }catch(err){
+    return res.status(400).json("Erro ao executar " + err);
+  }
+})
+
 classRouter.get('/:cnpj', async(req, res)=>{
   try{  
     const repo = getRepository(Pedido);

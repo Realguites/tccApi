@@ -1,10 +1,10 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm"
 import User from "./User"
 
 @Entity()
-export default class Atendente extends User{
+export default class Atendente{
 
-    @Column()
+    @PrimaryColumn()
     codAte: number
 
     @Column({ nullable: true })
