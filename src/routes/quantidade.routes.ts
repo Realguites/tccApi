@@ -6,7 +6,7 @@ const login = require("../middleware/login");
 const classRouter = Router();
 const bcrypt = require("bcrypt");
 
-classRouter.post('/', login ,async(req, res)=>{
+classRouter.post('/', async(req, res)=>{
   try{
     const repo = getRepository(Quantidade);
     //const resposta = await repo.save(req.body);

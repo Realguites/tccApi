@@ -60,6 +60,30 @@ classRouter.delete('/:cnpj', async(req, res)=>{
 
 })
 
+classRouter.get('/:cnpj/code/:codPro', async(req, res)=>{
+  try{  
+    const repo = getRepository(Produto);
+    const resposta = await repo.createQueryBuilder()
+    .where('"cnpj" = :cnpj and "codPro" = :codPro', { cnpj:req.params.cnpj, codPro:req.params.codPro })
+    .getOne();
+    return res.status(200).json(resposta);
+  }catch(err){
+    return res.status(400).json("Erro ao executar " + err);
+  }
 
+})
+
+classRouter.get('/:cnpj/name/:desPro', async(req, res)=>{
+  try{  
+    const repo = getRepository(Produto);
+    const resposta = await repo.createQueryBuilder()
+    .where('"cnpj" = :cnpj and "desPro" like :desPro', { cnpj:req.params.cnpj, desPro:'%' + req.params.desPro + '%'})
+    .getMany();
+    return res.status(200).json(resposta);
+  }catch(err){
+    return res.status(400).json("Erro ao executar " + err);
+  }
+
+})
 
 export default classRouter;
