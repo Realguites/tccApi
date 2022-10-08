@@ -1,10 +1,23 @@
 import { Router } from "express";
 import { Connection, getConnection, getRepository } from 'typeorm';
 import Produto from "../entity/Produto";
+import Quantidade from "../entity/Quantidade";
 
 const login = require("../middleware/login");
 const classRouter = Router();
 const bcrypt = require("bcrypt");
+
+async function getQuantidade(cnpj, codPro){
+  try{  
+    const repo = getRepository(Quantidade);
+    const resposta = await repo.createQueryBuilder()
+    .where('"cnpj" = :cnpj and "codPro" = :codPro', { cnpj, codPro })
+    .getOne();
+    return resposta;
+  }catch(err){
+    return "Erro ao buscar quantidade para o produto " + codPro + "! CNPJ: " + cnpj + " - " + err
+  }
+}
 
 classRouter.post('/', async(req, res)=>{
   try{
@@ -21,7 +34,6 @@ classRouter.post('/', async(req, res)=>{
 
 classRouter.get('/:cnpj', async(req, res)=>{
   try{  
-    console.log('RQUISICAO: ', req)
     const repo = getRepository(Produto);
     const resposta = await repo.createQueryBuilder()
     .where("cnpj = :cnpj", { cnpj:req.params.cnpj })
@@ -66,6 +78,9 @@ classRouter.get('/:cnpj/code/:codPro', async(req, res)=>{
     const resposta = await repo.createQueryBuilder()
     .where('"cnpj" = :cnpj and "codPro" = :codPro', { cnpj:req.params.cnpj, codPro:req.params.codPro })
     .getOne();
+    const quantidade = await getQuantidade(req.params.cnpj, req.params.codPro) as Quantidade
+    if(quantidade != null)
+      resposta.quantidade = quantidade
     return res.status(200).json(resposta);
   }catch(err){
     return res.status(400).json("Erro ao executar " + err);

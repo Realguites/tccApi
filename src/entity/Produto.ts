@@ -37,5 +37,6 @@ export default class Produto {
     @Column({ nullable: true })
     datEdi : Date
 
-    @OneToMany(() => Quantidade, (quantidade) => quantidade.codPro, { eager : true })
+    quantidade : Quantidade
+
 }

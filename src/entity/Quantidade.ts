@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm"
-import Produto from "./Produto"
 
 @Entity()
 export default class Quantidade {
@@ -40,6 +39,4 @@ export default class Quantidade {
     @Column({ nullable: true, type: "float" })
     prcTb2 : Number // Preço quantidade 
 
-    @ManyToOne(() => Produto, (produto) => produto.quantidades)
-    produto: Produto
 }
