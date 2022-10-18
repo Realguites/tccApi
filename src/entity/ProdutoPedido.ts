@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from "typeorm"
+import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm"
+import Pedido from "./Pedido"
 
 @Entity()
 export default class ProdutoPedido {
@@ -12,21 +13,25 @@ export default class ProdutoPedido {
     @Column()
 	qtdIte : Number // quantidade de itens
 
+	@Column({ type: "float" })
 	vlrUni : Number // valor unitario do produto
 
-    @Column()
+    @Column({ type: "float" })
 	perDes : Number // percentual de desconto
 
-    @Column()
+    @Column({ type: "float" })
 	vlrDes : Number
 
-    @Column()
+    @Column({ type: "float" })
 	vlrLiq : Number
 
-    @Column()
+    @Column({ type: "float" })
 	totIte : Number // valor total do item
 
     @Column()
 	idDisp : String
+
+	@ManyToOne(() => Pedido, (pedido) => pedido.produtosPedido)
+    pedido: Pedido
 
 }
