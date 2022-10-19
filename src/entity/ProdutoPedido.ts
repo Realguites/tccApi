@@ -4,7 +4,7 @@ import Pedido from "./Pedido"
 @Entity()
 export default class ProdutoPedido {
 
-    @PrimaryColumn()
+    //@PrimaryColumn()
 	codPro : Number // código do produto
 
     @Column()
@@ -31,6 +31,9 @@ export default class ProdutoPedido {
     @Column()
 	idDisp : String
 
+	@PrimaryColumn()
+	pedidoId: number
+	
 	@ManyToOne(() => Pedido, (pedido) => pedido.produtosPedido)
     pedido: Pedido
 

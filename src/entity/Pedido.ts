@@ -4,7 +4,7 @@ import ProdutoPedido from "./ProdutoPedido"
 @Entity()
 export default class Pedido{
     @PrimaryGeneratedColumn()
-    regAte : Number
+    id : Number
 
     @Column()
     codLoj : Number
@@ -39,6 +39,6 @@ export default class Pedido{
     @Column()
     idDisp : String
 
-    @OneToMany(() => ProdutoPedido, (produtoPedido) => produtoPedido.pedido) // note: we will create author property in the Photo class below
+    @OneToMany(() => ProdutoPedido, (produtoPedido) => produtoPedido.pedido ,{cascade:true}) // note: we will create author property in the Photo class below
     produtosPedido: ProdutoPedido[]
 }
