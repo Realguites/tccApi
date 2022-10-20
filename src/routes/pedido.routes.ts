@@ -9,13 +9,9 @@ const bcrypt = require("bcrypt");
 classRouter.post('/' ,async(req, res)=>{
   try{
     const repo = getRepository(Pedido);
-    //const resposta = await repo.save(req.body);
     let pedido: Pedido = req.body
-    console.log(pedido)
-  const resposta = repo.save(pedido)
-    /*const resposta = await getConnection()
-    .createQueryBuilder().insert().into(Pedido).values(pedido).execute();*/
-    return res.status(201).json(resposta);
+    repo.save(pedido)
+    return res.status(201).json(pedido);
 
   }catch(err){
     return res.status(400).json("Erro ao executar " + err);
@@ -39,7 +35,7 @@ classRouter.post('/:cnpj' ,async(req, res)=>{
   }
 })
 
-classRouter.get('/:cnpj', async(req, res)=>{
+classRouter.get('/:cnpj', login, async(req, res)=>{
   try{  
     const repo = getRepository(Pedido);
     const resposta = await repo.createQueryBuilder()
@@ -52,7 +48,7 @@ classRouter.get('/:cnpj', async(req, res)=>{
 
 })
 
-classRouter.get('/', async(req, res)=>{
+classRouter.get('/',login, async(req, res)=>{
   try{  
 
     const repo = getRepository(Pedido);
@@ -65,7 +61,7 @@ classRouter.get('/', async(req, res)=>{
 })
 
 
-classRouter.delete('/:cnpj', async(req, res)=>{
+classRouter.delete('/:cnpj', login, async(req, res)=>{
   try{  
     const repo = getRepository(Pedido);
     const resposta = await repo.delete(req.params.cnpj);

@@ -4,11 +4,14 @@ import Pedido from "./Pedido"
 @Entity()
 export default class ProdutoPedido {
 
-    //@PrimaryColumn()
+    @PrimaryColumn()
 	codPro : Number // código do produto
 
     @Column()
 	seqIte : Number
+
+	@Column()
+    cnpj : String
 
     @Column()
 	qtdIte : Number // quantidade de itens

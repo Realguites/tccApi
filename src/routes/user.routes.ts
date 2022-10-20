@@ -41,6 +41,8 @@ classRouter.get('/', login, async(req, res)=>{
 classRouter.put('/:id', login, async(req, res)=>{
   try{  
     const repo = getRepository(User);
+    const hash = bcrypt.hashSync(req.body.password, 15);
+    req.body.password = hash;
     const userToUpdate = await repo.findOne({
       id: req.params.id,
     })

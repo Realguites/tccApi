@@ -7,6 +7,9 @@ export default class Pedido{
     id : Number
 
     @Column()
+    cnpj : String
+
+    @Column()
     codLoj : Number
 
     @Column()
