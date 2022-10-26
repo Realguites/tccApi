@@ -13,6 +13,9 @@ export default class ProdutoPedido {
 	@Column()
     cnpj : String
 
+	@Column()
+    desPro : String
+
     @Column()
 	qtdIte : Number // quantidade de itens
 

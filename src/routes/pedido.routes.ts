@@ -48,6 +48,20 @@ classRouter.get('/:cnpj', login, async(req, res)=>{
 
 })
 
+classRouter.get('/:cnpj/:id', login, async(req, res)=>{
+  try{  
+    const repo = getRepository(Pedido);
+    /*const resposta = await repo.createQueryBuilder()
+    .where("cnpj = :cnpj and id = :id", { cnpj:req.params.cnpj, id:req.params.id })
+    .getOne();*/
+    const resposta = await repo.findOne({id:req.params.id})
+    return res.status(200).json(resposta);
+  }catch(err){
+    return res.status(400).json("Erro ao executar " + err);
+  }
+
+})
+
 classRouter.get('/',login, async(req, res)=>{
   try{  
 
