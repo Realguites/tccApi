@@ -51,7 +51,7 @@ classRouter.get('/:cnpj', login, async(req, res)=>{
 
 classRouter.get('/:cnpj/:id', login, async(req, res)=>{
   try{  
-    console.log(req.headers.authorization)
+    //console.log(req.headers.authorization)
     const repo = getRepository(Pedido);
     /*const resposta = await repo.createQueryBuilder()
     .where("cnpj = :cnpj and id = :id", { cnpj:req.params.cnpj, id:req.params.id })
@@ -66,36 +66,27 @@ classRouter.get('/:cnpj/:id', login, async(req, res)=>{
 
 classRouter.put('/:id', login, async(req, res)=>{
   try{  
-    //console.log(req.headers.authorization)
     const repo = getRepository(Pedido);
-    const pedidoOld = await repo.findOne({id:req.params.id})
-    repo.delete({
-      ...pedidoOld
-    })
-    const pedidoNew: Pedido = req.body
-    const resposta = repo.save({
-      ...pedidoNew
-    })
-    return res.status(201).json(resposta);
-    /*const repo2 = getRepository(ProdutoPedido);
-    repo2.createQueryBuilder()
-    .delete()
-    .where({
-      pedidoId: req.params.id
-    })
+    const repo2 = getRepository(ProdutoPedido);
+    const pedido = await repo.findOne({id:req.params.id})
+    //console.log(pedido.produtosPedido)
+   // pedido.produtosPedido.map((e)=>{
+      //repo2.delete({pedidoId:req.params.id})
+    //})
+   // const resposta = repo.save({
+    //  ...pedidoNew
+    //})
     //repo2.delete(req.params.id)
-
+    //return res.status(204).json('Ok');
 
     let pedidoNew: Pedido = req.body
     //pedido.id = req.params.id
     const resposta = repo.save({
-      ...pedidoOld,
+      ...pedido,
       ...pedidoNew
     })
-    return res.status(201).json(resposta);
-    /*const repo = getRepository(Pedido);
-    const resposta = await repo.findOne({id:req.params.id})
-    return res.status(200).json(resposta);*/
+    return res.status(204).json(resposta)
+    
   }catch(err){
     return res.status(400).json("Erro ao executar " + err);
   }
@@ -114,14 +105,13 @@ classRouter.get('/',login, async(req, res)=>{
 })
 
 
-classRouter.delete('/:cnpj', login, async(req, res)=>{
+classRouter.delete('/:cnpj/:id', login, async(req, res)=>{
   try{  
     const repo = getRepository(Pedido);
-    const resposta = await repo.delete(req.params.cnpj);
-    await repo.createQueryBuilder().delete().from(Pedido)
-    .where("cnpj = :cnpj", { cnpj:req.params.cnpj }).execute()
-    
-    return res.status(204).json('OK');
+    const repo2 = getRepository(ProdutoPedido);
+    repo2.delete({pedidoId:req.params.id})
+    const resposta = repo.delete({id:req.params.id})
+  return res.status(201).json(resposta);
   }catch(err){
     return res.status(400).json("Erro ao executar " + err);
   }
