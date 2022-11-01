@@ -8,16 +8,16 @@ export default class Cliente {
     @Column()
 	nomCli : String
 
-    @Column()
+    @Column({ nullable: true })
 	endCli : String
 
-    @Column()
+    @Column({ nullable: true })
 	baiCli : String
 
-    @Column()
+    @Column({ nullable: true })
 	cidCli : String
 
-    @Column()
+    @Column({ nullable: true })
 	estCli : String
 
     @Column({ nullable: true })

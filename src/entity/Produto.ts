@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from "typeorm"
+import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm"
+import Quantidade from "./Quantidade"
 
 @Entity()
 export default class Produto {
@@ -35,4 +36,7 @@ export default class Produto {
 
     @Column({ nullable: true })
     datEdi : Date
+
+    quantidade : Quantidade
+
 }

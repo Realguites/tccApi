@@ -1,9 +1,13 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, OneToMany } from "typeorm"
+import ProdutoPedido from "./ProdutoPedido"
 
 @Entity()
 export default class Pedido{
     @PrimaryGeneratedColumn()
-    regAte : Number
+    id : Number
+
+    @Column()
+    cnpj : String
 
     @Column()
     codLoj : Number
@@ -20,10 +24,10 @@ export default class Pedido{
     @Column()
     nomCli : String
 
-    @Column()
+    @Column({ type: "float" })
     perDes : Number
 
-    @Column()
+    @Column({ type: "float" })
     vlrReg : Number
 
     @Column()
@@ -37,4 +41,7 @@ export default class Pedido{
 
     @Column()
     idDisp : String
+
+    @OneToMany(() => ProdutoPedido, (produtoPedido) => produtoPedido.pedido ,{cascade:true, eager:true}) // note: we will create author property in the Photo class below
+    produtosPedido: ProdutoPedido[]
 }

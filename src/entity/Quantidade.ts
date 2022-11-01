@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn } from "typeorm"
+import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm"
 
 @Entity()
 export default class Quantidade {
@@ -38,4 +38,5 @@ export default class Quantidade {
 
     @Column({ nullable: true, type: "float" })
     prcTb2 : Number // Preço quantidade 
+
 }
